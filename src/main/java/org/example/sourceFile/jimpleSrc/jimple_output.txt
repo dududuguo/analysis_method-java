@@ -1,0 +1,17 @@
+Method: <init>
+r0 := @this: org.example.sourceFile.testPA
+specialinvoke r0.<java.lang.Object: void <init>()>()
+r0.<org.example.sourceFile.testPA: int aa> = 10
+r0.<org.example.sourceFile.testPA: int bb> = 20
+return
+Method: foo
+r0 := @this: org.example.sourceFile.testPA
+return
+Method: main
+r1 := @parameter0: java.lang.String[]
+$r0 = new org.example.sourceFile.testPA
+specialinvoke $r0.<org.example.sourceFile.testPA: void <init>()>()
+virtualinvoke $r0.<org.example.sourceFile.testPA: void foo()>()
+$r0.<org.example.sourceFile.testPA: int aa> = 30
+i0 = $r0.<org.example.sourceFile.testPA: int bb>
+return

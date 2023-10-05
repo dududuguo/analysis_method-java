@@ -1,0 +1,13 @@
+Method: <init>
+r0 := @this: org.example.sourceFile.exampleCHA.TestCHA
+specialinvoke r0.<java.lang.Object: void <init>()>()
+return
+Method: main
+r2 := @parameter0: java.lang.String[]
+$r0 = new org.example.sourceFile.exampleCHA.Dog
+specialinvoke $r0.<org.example.sourceFile.exampleCHA.Dog: void <init>()>()
+$r1 = new org.example.sourceFile.exampleCHA.Cat
+specialinvoke $r1.<org.example.sourceFile.exampleCHA.Cat: void <init>()>()
+virtualinvoke $r0.<org.example.sourceFile.exampleCHA.Animal: void speak()>()
+virtualinvoke $r1.<org.example.sourceFile.exampleCHA.Animal: void speak()>()
+return
