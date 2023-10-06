@@ -1,9 +1,9 @@
 digraph Graph {
     node [shape=box];
-    "_org.example.sourceFile.exampleCHA.TestCHA_ void main(java.lang.String[])_" -> "_org.example.sourceFile.exampleCHA.Cat_ void _init_()_";
-    "_org.example.sourceFile.exampleCHA.TestCHA_ void main(java.lang.String[])_" -> "_org.example.sourceFile.exampleCHA.Dog_ void _init_()_";
-    "_org.example.sourceFile.exampleCHA.Dog_ void _init_()_" -> "_org.example.sourceFile.exampleCHA.Animal_ void _init_()_";
-    "_org.example.sourceFile.exampleCHA.TestCHA_ void main(java.lang.String[])_" -> "_org.example.sourceFile.exampleCHA.Dog_ void speak()_";
-    "_org.example.sourceFile.exampleCHA.Cat_ void _init_()_" -> "_org.example.sourceFile.exampleCHA.Animal_ void _init_()_";
-    "_org.example.sourceFile.exampleCHA.TestCHA_ void main(java.lang.String[])_" -> "_org.example.sourceFile.exampleCHA.Animal_ void speak()_";
+    "org.example.sourceFile.exampleCHA.TestCHA void main(java.lang.String[])" -> "org.example.sourceFile.exampleCHA.Cat void init()";
+    "org.example.sourceFile.exampleCHA.TestCHA void main(java.lang.String[])" -> "org.example.sourceFile.exampleCHA.Dog void init()";
+    "org.example.sourceFile.exampleCHA.Dog void init()" -> "org.example.sourceFile.exampleCHA.Animal void init()";
+    "org.example.sourceFile.exampleCHA.TestCHA void main(java.lang.String[])" -> "org.example.sourceFile.exampleCHA.Dog void speak()";
+    "org.example.sourceFile.exampleCHA.Cat void init()" -> "org.example.sourceFile.exampleCHA.Animal void init()";
+    "org.example.sourceFile.exampleCHA.TestCHA void main(java.lang.String[])" -> "org.example.sourceFile.exampleCHA.Animal void speak()";
 }

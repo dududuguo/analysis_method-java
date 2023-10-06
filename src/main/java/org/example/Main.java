@@ -30,6 +30,11 @@ public class Main {
         String filename = "src\\main\\java\\org\\example\\sourceFile\\dotFiles\\input.dot";
         graph.writeDotFormat(filename, dotFormat);
 
+        // class call graph
+        String classDotFormat = graph.toClassDotFormat(edges);
+        String classFilename = "src\\main\\java\\org\\example\\sourceFile\\dotFiles\\class.dot";
+        graph.writeDotFormat(classFilename, classDotFormat);
+
         //pointer analysis
         PA_CIFI pa_cifi = new PA_CIFI(cg);
         pa_cifi.solve();

@@ -68,8 +68,8 @@ public class Graph {
             String tgt = edge.getTgt().method().getSignature();
 
             // Replace the special characters in the method signature
-            src = src.replaceAll("[<>:\"/\\-]", "_");
-            tgt = tgt.replaceAll("[<>:\"/\\-]", "_");
+            src = src.replaceAll("[<>:\"/\\-]", "");
+            tgt = tgt.replaceAll("[<>:\"/\\-]", "");
 
             builder.append("    \"").append(src).append("\" -> \"").append(tgt).append("\";\n");
         }
@@ -89,5 +89,27 @@ public class Graph {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String toClassDotFormat(Set<Edge> edges) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("digraph Graph {\n");
+        builder.append("    node [shape=box];\n");
+
+        for (Edge edge : edges) {
+            // Get the source method signature
+            String src = edge.getSrc().method().getDeclaringClass().getName();
+            // Get the target method signature
+            String tgt = edge.getTgt().method().getDeclaringClass().getName();
+
+            // Replace the special characters in the method signature
+            src = src.replaceAll("[<>:\"/\\-]", "");
+            tgt = tgt.replaceAll("[<>:\"/\\-]", "");
+
+            builder.append("    \"").append(src).append("\" -> \"").append(tgt).append("\";\n");
+        }
+
+        builder.append("}\n");
+        return builder.toString();
     }
 }

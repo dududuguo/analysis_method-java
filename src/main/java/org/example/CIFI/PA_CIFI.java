@@ -1,21 +1,17 @@
 package org.example.CIFI;
 
 import org.example.ultis.Pointer;
-import soot.*;
+import soot.SootMethod;
+import soot.Unit;
+import soot.Value;
 import soot.jimple.AssignStmt;
 import soot.jimple.InstanceFieldRef;
 import soot.jimple.JimpleBody;
 import soot.jimple.NewExpr;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
-import soot.options.Options;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
-
-import static soot.SootClass.SIGNATURES;
 
 /*
     1. using Soot to be Jimple
@@ -45,14 +41,16 @@ import static soot.SootClass.SIGNATURES;
 public class PA_CIFI {
 
     // worklist ={<value, linklist>}
-    private Map<Value, LinkedList<Pointer>> workList = new LinkedHashMap<>();
+    private Map<Value, LinkedList<Pointer>> workList;
     // Call Graph
     private CallGraph cg;
     // Used to keep track of all edges
-    private Map<Value, Set<Value>> PFG = new HashMap<>();
+    private Map<Value, Set<Value>> PFG;
 
     public PA_CIFI(CallGraph cg) {
         this.cg = cg;
+        PFG = new HashMap<>();
+        workList = new LinkedHashMap<>();
     }
 
     // pointer analysis
@@ -209,7 +207,6 @@ public class PA_CIFI {
         for (Map.Entry<Value, Set<Value>> entry : PFG.entrySet()) {
             Value variable = entry.getKey();
             Set<Value> pointsToSet = entry.getValue();
-
             System.out.println(variable + " may point to: " + pointsToSet);
         }
     }

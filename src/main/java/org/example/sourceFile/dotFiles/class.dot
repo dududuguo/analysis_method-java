@@ -1,0 +1,9 @@
+digraph Graph {
+    node [shape=box];
+    "org.example.sourceFile.exampleCHA.TestCHA" -> "org.example.sourceFile.exampleCHA.Cat";
+    "org.example.sourceFile.exampleCHA.TestCHA" -> "org.example.sourceFile.exampleCHA.Dog";
+    "org.example.sourceFile.exampleCHA.Dog" -> "org.example.sourceFile.exampleCHA.Animal";
+    "org.example.sourceFile.exampleCHA.TestCHA" -> "org.example.sourceFile.exampleCHA.Dog";
+    "org.example.sourceFile.exampleCHA.Cat" -> "org.example.sourceFile.exampleCHA.Animal";
+    "org.example.sourceFile.exampleCHA.TestCHA" -> "org.example.sourceFile.exampleCHA.Animal";
+}
