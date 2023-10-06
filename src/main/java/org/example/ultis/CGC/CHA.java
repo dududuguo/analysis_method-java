@@ -6,32 +6,35 @@ import soot.*;
 import soot.jimple.*;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
-import soot.options.Options;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 import static org.example.ultis.Dispatch.dispatch;
-
+import static org.example.ultis.Writer.writeToFile;
 
 // Class Hierarchy Analysis
 public class CHA {
-    Methods T = new Methods();
 
     public void Solve() {
+        Methods T = new Methods();
+
         // init soot
         writeToFile();
         CallGraph cg = Scene.v().getCallGraph();
-        System.out.println("INFO: Application edge size are "+cg.size());
+        System.out.println("INFO: Application edge size are " + cg.size());
 
         // Solve
         for (Edge edge : cg) {
             Stmt stmt = edge.srcStmt();
             if (stmt != null) {
-                Resolve(stmt);
+                Methods temp = Resolve(stmt);
+                // union
+                if (temp != null) {
+                    for (SootMethod s : temp.getMethods()) {
+                        if (s != null)
+                            T.addMethod(s);
+                    }
+                }
             }
         }
 
@@ -39,7 +42,8 @@ public class CHA {
         System.out.println(T.printMethods());
     }
 
-    void Resolve(Stmt cs) {
+    static Methods Resolve(Stmt cs) {
+        Methods T = new Methods();
         if (cs.containsInvokeExpr()) {
             InvokeExpr invokeExpr = cs.getInvokeExpr();
             SootMethod method = invokeExpr.getMethod();
@@ -48,7 +52,7 @@ public class CHA {
 
             // Only consider methods in the exampleCHA package
             if (!method.getDeclaringClass().getName().startsWith("org.example.sourceFile.exampleCHA")) {
-                return;
+                return null;
             }
 
 
@@ -73,41 +77,6 @@ public class CHA {
                 }
             }
         }
-    }
-
-    void writeToFile() {
-        String ClassPath = "target\\classes";
-        String sootClassPath = ClassPath + ";" + Scene.v().getSootClassPath();
-        Scene.v().setSootClassPath(sootClassPath);
-        String className = "org.example.sourceFile.exampleCHA.TestCHA";
-
-        Options.v().set_output_format(Options.output_format_jimple);
-        Options.v().set_whole_program(true);                             // Enable full program analysis mode
-        Options.v().setPhaseOption("cg.spark", "on");       // Enable Spark to call graph
-        Options.v().set_no_bodies_for_excluded(true);
-        Options.v().set_allow_phantom_refs(true);
-
-        SootClass sootClass = Scene.v().loadClassAndSupport(className);
-        sootClass.setApplicationClass();
-        Scene.v().loadBasicClasses();
-        Scene.v().loadNecessaryClasses();
-        Scene.v().setEntryPoints(Collections.singletonList(Scene.v().getMainMethod()));
-        Scene.v().setMainClass(sootClass);
-        PackManager.v().runPacks();
-
-        String filename = "src\\main\\java\\org\\example\\sourceFile\\jimpleSrc\\" + sootClass.getName();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename + ".txt"))) {
-            for (SootMethod sootMethod : sootClass.getMethods()) {
-                if (sootMethod.hasActiveBody()) {
-                    writer.write("Method: " + sootMethod.getName() + "\n");
-                    JimpleBody body = (JimpleBody) sootMethod.getActiveBody();
-                    for (Unit u : body.getUnits()) {
-                        writer.write(u.toString() + "\n");
-                    }
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return T;
     }
 }
